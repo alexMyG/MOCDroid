@@ -1,0 +1,10 @@
+clustersmalware matrix_20_clusters_kmeans_sparse_0.995_imports_malware.csv
+clustersbenignware matrix_20_clusters_kmeans_sparse_0.995_imports_benignware.csv
+datasetmalware imports_malware.csv
+datasetbenignware imports_benignware.csv
+population 500
+generations 200
+breedelite 10
+sparse 995
+crossover 0.2
+mutation 0.1

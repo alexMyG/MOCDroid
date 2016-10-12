@@ -1,0 +1,91 @@
+# Copyright 2006 by Sean Luke and George Mason University
+# Licensed under the Academic Free License version 3.0
+# See the file "LICENSE" for more information
+
+#uncomment the desired multiobjective algorithm
+parent.0 = spea2.params
+#parent.0 = nsga2.params
+
+stat = ec.multiobjective.MultiObjectiveStatistics
+stat.front = $front.stat
+breedthreads = 6
+evalthreads = 6
+#
+# optionally your type could be: zdt1, zdt2, zdt3, zdt4, zdt6, sphere
+#
+# Different problems has different default settings, so we suggest
+# using the appropriate params file for each benchmark.
+
+pop.subpop.0.species = ec.vector.IntegerVectorSpecies
+pop.subpop.0.species.ind = ec.vector.IntegerVectorIndividual
+pop.subpop.0.species.fitness.num-objectives = 2
+
+pop.subpop.0.species.fitness.maximize.0 = true
+pop.subpop.0.species.fitness.maximize.1 = false
+
+#pop.subpop.0.species.min-gene	= 0
+#pop.subpop.0.species.max-gene 	= 1
+
+seed.0 = time
+seed.1 = time
+seed.2 = time
+seed.3 = time
+seed.4 = time
+seed.5 = time
+
+
+#generations =                           5
+
+#pop.subpop.0.size =                    	50
+
+# Uncomment this if you'd like to force reevaluation of all archive
+# members each generation.
+#
+#breed.reevaluate-elites.0 = true
+breed.elite.0 = 5
+
+# The multiobjective optimization routines here can use any crossover
+# and mutation pipeline you like, but the literature tends to stick with
+# SBX for crossover and Polynomial Mutation.  And with good reason: our
+# tests indicate that Polynomial Mutation is much better than Gaussian of
+# any setting for these problems.  And for SPEA2 at least, SBX seems to
+# outperform most other crossover operators.  Note that we're using the
+# "bounded" Polynomial Mutation variant, which seems to do a bit better.
+
+#pop.subpop.0.species.crossover-type = sbx
+#pop.subpop.0.species.crossover-distribution-index = 20
+
+#pop.subpop.0.species.mutation-type = random-walk
+# This is the probability that we will continue the random walk;
+# hence larger probabilities yield longer walks.
+#pop.subpop.0.species.random-walk-probability = 0.2
+
+
+#pop.subpop.0.species.genome-size	= 100
+
+
+pop.subpop.0.species.crossover-type = any
+#pop.subpop.0.species.crossover-prob = 0.2
+#pop.subpop.0.species.mutation-type = reset
+#pop.subpop.0.species.mutation-prob = 0.1
+#pop.subpop.0.species.mutation-stdev = 0.05
+
+
+#pop.subpop.0.species.num-segments = 2
+#pop.subpop.0.species.segment-type = start
+#pop.subpop.0.species.segment.0.start = 0
+#pop.subpop.0.species.segment.1.start = 600
+
+
+
+
+pop.subpop.0.species.duplicate-retries = 2
+
+#base.likelihood = 0.2
+
+pop.subpop.0.species.pipe          = ec.vector.breed.VectorMutationPipeline
+pop.subpop.0.species.pipe.source.0 = ec.vector.breed.VectorCrossoverPipeline
+pop.subpop.0.species.pipe.source.0.source.0 = ec.multiobjective.spea2.SPEA2TournamentSelection
+pop.subpop.0.species.pipe.source.0.source.1 = same
+
+select.tournament.size = 10
